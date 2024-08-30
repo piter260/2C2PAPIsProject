@@ -91,22 +91,14 @@ namespace APIsProject.Controllers
 
             foreach (var record in records)
             {
-                var res = record.Status.Trim('"', '“', '”');
-                var TransactionId = record.TransactionId.Trim('"', '“', '”');
-                var    Amount = record.Amount;
-                var CurrencyCode = record.CurrencyCode.Trim('"', '“', '”');
-                var    TransactionDate = record.TransactionDate;
-                var Status = MapStatusToCode(record.Status.Trim('"', '“', '”'));
-
                 var transaction = new Transactions
                 {
-                    //Id = null,
                     TransactionId = record.TransactionId.Trim('"', '“', '”'),
                     Amount = record.Amount,
                     CurrencyCode = record.CurrencyCode.Trim('"', '“', '”'),
                     TransactionDate = record.TransactionDate,
                     Status = MapStatusToCode(record.Status.Trim('"', '“', '”'))
-            };
+                };
 
                 _context.Transaction.Add(transaction);
             }
