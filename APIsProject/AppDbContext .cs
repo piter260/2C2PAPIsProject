@@ -14,6 +14,8 @@ namespace APIsProject
         }
 
         public Microsoft.EntityFrameworkCore.DbSet<TestTable> TestTable { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Transactions> Transaction { get; set; }
+        
     }
 }
 
