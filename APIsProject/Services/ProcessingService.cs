@@ -15,11 +15,11 @@ namespace APIsProject.Services
         IEnumerable<Transactions> GetTransactionsByDateRange(DateTime startDate, DateTime endDate);
         IEnumerable<Transactions> GetTransactionsByStatus(string status);
     }
-    public class ProcessingFilesService
+    public class ProcessingService
     {
         private readonly AppDbContext _context;
 
-        public ProcessingFilesService(AppDbContext context)
+        public ProcessingService(AppDbContext context)
         {
             _context = context;
         }

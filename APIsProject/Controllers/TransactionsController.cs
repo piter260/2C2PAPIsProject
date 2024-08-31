@@ -7,11 +7,11 @@ namespace APIsProject.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UploadFilesController : ControllerBase
+    public class TransactionsController : ControllerBase
     {
-        private readonly ProcessingFilesService _processingFilesService;
+        private readonly ProcessingService _processingFilesService;
 
-        public UploadFilesController(ProcessingFilesService processingFilesService)
+        public TransactionsController(ProcessingService processingFilesService)
         {
             _processingFilesService = processingFilesService;
         }

@@ -76,7 +76,7 @@
                 formData.append("file", this.selectedFile);
 
                 try {
-                    const response = await axios.post("https://localhost:7202/UploadFiles/file-upload", formData, {
+                    const response = await axios.post("https://localhost:7202/Transactions/file-upload", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data"
                         }
@@ -89,7 +89,7 @@
             },
             async fetchByCurrency() {
                 try {
-                    const response = await axios.get(`https://localhost:7202/UploadFiles/get-transations-by-currency/${this.currency}`);
+                    const response = await axios.get(`https://localhost:7202/Transactions/get-transations-by-currency/${this.currency}`);
                     this.transactions = response.data;
                 } catch (error) {
                     console.error("Error fetching transactions by currency:", error);
@@ -97,7 +97,7 @@
             },
             async fetchByDateRange() {
                 try {
-                    const response = await axios.get(`https://localhost:7202/UploadFiles/get-transations-by-daterange`, {
+                    const response = await axios.get(`https://localhost:7202/Transactions/get-transations-by-daterange`, {
                         params: {
                             startDate: this.startDate,
                             endDate: this.endDate
@@ -110,7 +110,7 @@
             },
             async fetchByStatus() {
                 try {
-                    const response = await axios.get(`https://localhost:7202/UploadFiles/get-transations-by-status/${this.status}`);
+                    const response = await axios.get(`https://localhost:7202/Transactions/get-transations-by-status/${this.status}`);
                     this.transactions = response.data;
                 } catch (error) {
                     console.error("Error fetching transactions by status:", error);
