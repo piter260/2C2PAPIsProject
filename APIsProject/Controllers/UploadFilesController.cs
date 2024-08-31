@@ -58,7 +58,7 @@ namespace APIsProject.Controllers
             catch (Exception ex)
             {
                 // Handle any other unexpected exceptions
-                return StatusCode(500, $"An error occurred while processing the file: {ex.Message}");
+                return StatusCode(500, "Bad Request");
             }
 
             return Ok("File uploaded and processed successfully.");

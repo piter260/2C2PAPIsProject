@@ -25,22 +25,31 @@
             };
         },
         methods: {
-            async fetchWeather() {
-                try {
-                    // Replace with your actual API endpoint URL
-                    const response = await axios.get('https://localhost:7202/WeatherForecast');
-                    console.log('fetchWeather response ', response);
-                    this.weather = response.data;
-                } catch (error) {
-                    console.error('Error fetching weather data:', error);
-                }
-            },
+            //async fetchWeather() {
+            //    try {
+            //        // Replace with your actual API endpoint URL
+            //        const response = await axios.get('https://localhost:7202/WeatherForecast');
+            //        console.log('fetchWeather response ', response);
+            //        this.weather = response.data;
+            //    } catch (error) {
+            //        console.error('Error fetching weather data:', error);
+            //    }
+            //},
             onFileChange(event) {
                 this.selectedFile = event.target.files[0];
             },
             async uploadFile() {
                 if (!this.selectedFile) {
                     alert("Please select a file first");
+                    return;
+                }
+
+                // Get the file extension
+                const fileExtension = this.selectedFile.name.split('.').pop().toLowerCase();
+
+                // Check if the file extension is allowed (csv or xml)
+                if (fileExtension !== 'csv' && fileExtension !== 'xml') {
+                    alert("Unknown format. Please upload a CSV or XML file.");
                     return;
                 }
 
@@ -53,6 +62,7 @@
                             "Content-Type": "multipart/form-data"
                         }
                     });
+                    alert("File uploaded successfully:");
                     console.log("File uploaded successfully:", response.data);
                 } catch (error) {
                     console.error("Error uploading file:", error);
