@@ -7,6 +7,14 @@ using System.Xml;
 
 namespace APIsProject.Services
 {
+    public interface IProcessingFilesService
+    {
+        Task ProcessCsv(IFormFile file);
+        Task ProcessXml(IFormFile file);
+        IEnumerable<Transactions> GetTransactionsByCurrency(string currency);
+        IEnumerable<Transactions> GetTransactionsByDateRange(DateTime startDate, DateTime endDate);
+        IEnumerable<Transactions> GetTransactionsByStatus(string status);
+    }
     public class ProcessingFilesService
     {
         private readonly AppDbContext _context;
@@ -52,7 +60,7 @@ namespace APIsProject.Services
                     Status = MapStatusToCode(record.Status.Trim('"', '“', '”'))
                 };
 
-                _context.Transaction.Add(transaction);
+                _context.Transactions.Add(transaction);
             }
 
             await _context.SaveChangesAsync();
@@ -101,7 +109,7 @@ namespace APIsProject.Services
                         Status = MapStatusToCode(transaction.SelectSingleNode("Status").InnerText)
                     };
 
-                    _context.Transaction.Add(record);
+                    _context.Transactions.Add(record);
                 }
                 catch (FormatException ex)
                 {
@@ -164,6 +172,27 @@ namespace APIsProject.Services
 
                 throw new CsvHelper.TypeConversion.TypeConverterException(this, memberMapData, text, row.Context, $"Cannot convert '{text}' to DateTime.");
             }
+        }
+
+        public IEnumerable<Transactions> GetTransactionsByCurrency(string currency)
+        {
+            return _context.Transactions
+                           .Where(t => t.CurrencyCode == currency)
+                           .ToList();
+        }
+
+        public IEnumerable<Transactions> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return _context.Transactions
+                           .Where(t => t.TransactionDate >= startDate && t.TransactionDate <= endDate)
+                           .ToList();
+        }
+
+        public IEnumerable<Transactions> GetTransactionsByStatus(string status)
+        {
+            return _context.Transactions
+                           .Where(t => t.Status == status)
+                           .ToList();
         }
     }
 }

@@ -1,12 +1,6 @@
 using APIsProject.Models;
 using APIsProject.Services;
-using CsvHelper;
-using CsvHelper.Configuration;
-using CsvHelper.TypeConversion;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Formats.Asn1;
-using System.Globalization;
 using System.Xml;
 
 namespace APIsProject.Controllers
@@ -22,7 +16,7 @@ namespace APIsProject.Controllers
             _processingFilesService = processingFilesService;
         }
 
-        [HttpPost("FileUpload")]
+        [HttpPost("file-upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -62,6 +56,45 @@ namespace APIsProject.Controllers
             }
 
             return Ok("File uploaded and processed successfully.");
+        }
+
+        [HttpGet("get-transations-by-currency/{currency}")]
+        public ActionResult<IEnumerable<Transactions>> GetTransactionsByCurrency(string currency)
+        {
+            var transactions = _processingFilesService.GetTransactionsByCurrency(currency);
+
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(transactions);
+        }
+
+        [HttpGet("get-transations-by-daterange")]
+        public ActionResult<IEnumerable<Transactions>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            var transactions = _processingFilesService.GetTransactionsByDateRange(startDate, endDate);
+
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(transactions);
+        }
+
+        [HttpGet("get-transations-by-status/{status}")]
+        public ActionResult<IEnumerable<Transactions>> GetTransactionsByStatus(string status)
+        {
+            var transactions = _processingFilesService.GetTransactionsByStatus(status);
+
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(transactions);
         }
 
     }

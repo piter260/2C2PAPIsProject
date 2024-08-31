@@ -13,7 +13,7 @@ namespace APIsProject
         {
         }
 
-        public Microsoft.EntityFrameworkCore.DbSet<Transactions> Transaction { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Transactions> Transactions { get; set; }
         
     }
 }
